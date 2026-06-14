@@ -13,11 +13,37 @@ Plug in your adapter (~80 LOC), run the same datasets under the same constraints
 [![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
 [![Stars](https://img.shields.io/github/stars/unison-labs-ai/Unison-evals?style=social)](https://github.com/unison-labs-ai/Unison-evals)
 
-[**Benchmarks**](#benchmarks) • [**Results**](#results) • [**Quickstart**](#quickstart) • [**Architecture**](#architecture) • [**Add a system**](#adding-a-new-system)
+[**Why**](#why-this-exists) • [**Benchmarks**](#benchmarks) • [**Results**](#results) • [**Quickstart**](#quickstart) • [**Architecture**](#architecture) • [**Add a system**](#adding-a-new-system)
 
 </div>
 
 ---
+
+## Why this exists
+
+Memory-system benchmarks today are a credibility vacuum. Headline numbers are
+self-reported, quoted against the weakest available baseline (e.g. "X% faster than
+stuffing the whole transcript into context"), and routinely *fail to reproduce* —
+public attempts to reproduce a leading vendor's flagship score have landed an order
+of magnitude below the claim. Most published comparisons are written by one of the
+systems being compared.
+
+unison-evals is the opposite by construction:
+
+- **Everyone on the same harness.** Each system — including ours — implements one
+  ~80-LOC adapter and is scored on identical datasets, metrics, and constraints. No
+  home-field advantage, no per-vendor scoring tweaks.
+- **End-to-end answer accuracy, not retrieval recall.** We grade the *final answer*
+  the user would see — you can fetch the right passage and still answer wrong.
+- **A decision-driving test, not just passive recall.** Passive recall saturates near
+  100% and hides the real failure mode: scores collapse when memory has to *change
+  what the agent does*. MemoryAgentBench is included to measure exactly that — the
+  test most vendor benchmarks avoid.
+- **Reproducible or it doesn't count.** Pinned dataset hashes, pinned judge model,
+  per-question JSON artifacts. Clone it, run it, check our claims against everyone
+  else's. PRs welcome if we configured any comparator at a disadvantage.
+
+We publish our own numbers knowing you can falsify them. That's the point.
 
 ## Benchmarks
 
